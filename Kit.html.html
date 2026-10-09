@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Employee Joining Form</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+  <style>
+    :root { 
+      --primary: #10b981; 
+      --primary-hover: #059669;
+      --bg: #f8fafc; 
+      --card: #ffffff; 
+      --text-main: #1e293b;
+      --text-muted: #64748b;
+      --border: #e2e8f0; 
+      --ring: rgba(16, 185, 129, 0.15);
+      --radius: 8px;
+      --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    }
+    
+    body { 
+      margin: 0; 
+      font-family: 'Inter', sans-serif; 
+      background: var(--bg); 
+      color: var(--text-main); 
+      line-height: 1.6; 
+    }
+    
+    .container { 
+      max-width: 1200px; 
+      margin: 30px auto; 
+      padding: 0 15px; 
+    }
+    
+    .form-card { 
+      background: var(--card); 
+      border-radius: 12px; 
+      box-shadow: var(--shadow); 
+      overflow: hidden; 
+      border: 1px solid var(--border);
+    }
+    
+    /* Header Area */
+    .header { 
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); 
+      color: white; 
+      padding: 30px; 
+      display: flex; 
+      justify-content: space-between; 
+      align-items: center; 
+      border-bottom: 4px solid var(--primary);
+    }
+    
+    .header h1 { 
+      margin: 0 0 5px 0; 
+      font-size: 26px; 
+      font-weight: 700; 
+      letter-spacing: -0.5px;
+    }
+    
+    .header small {
+      color: #94a3b8;
+      font-size: 14px;
+      font-weight: 400;
+    }
+    
+    .header-btns { 
+      display: flex; 
+      gap: 12px; 
+    }
+    
+    /* Section Styling */
+    .section { 
+      padding: 35px 30px; 
+      border-bottom: 1px solid var(--border); 
+      background: #fff;
+    }
+    
+    .section:nth-child(even) {
+      background: #fdfdfd;
+    }
+    
+    .section-title { 
+      color: var(--text-main); 
+      font-size: 18px; 
+      font-weight: 600; 
+      margin-bottom: 25px; 
+      display: flex; 
+      align-items: center; 
+    }
+    
+    .section-title i {
+      color: var(--primary);
+      background: #ecfdf5;
+      padding: 10px;
+      border-radius: 8px;
+      margin-right: 12px;
+      font-size: 16px;
+    }
+    
+    /* Grid Layout */
+    .grid { 
+      display: grid; 
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); 
+      gap: 20px; 
+    }
+    
+    .field { 
+      display: flex;
+      flex-direction: column;
+    }
+    
+    label { 
+      font-size: 13px; 
+      font-weight: 600; 
+      color: var(--text-muted); 
+      margin-bottom: 8px; 
+    }
+    
+    /* Input Styling */
+    input[type="text"], input[type="date"], select, textarea { 
+      width: 100%; 
+      padding: 12px 14px; 
+      border: 1px solid var(--border); 
+      border-radius: var(--radius); 
+      font-size: 14px; 
+      font-family: inherit;
+      color: var(--text-main);
+      box-sizing: border-box; 
+      transition: all 0.2s ease; 
+      background: #fff;
+    }
+    
+    input:focus, select:focus { 
+      outline: none; 
+      border-color: var(--primary); 
+      box-shadow: 0 0 0 3px var(--ring); 
+    }
+
+    input[type="file"] {
+      font-size: 13px;
+      padding: 8px;
+      border: 1px dashed #cbd5e1;
+      border-radius: var(--radius);
+      background: #f8fafc;
+      cursor: pointer;
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    input[type="file"]::file-selector-button {
+      background: #e2e8f0;
+      border: none;
+      padding: 6px 12px;
+      border-radius: 4px;
+      color: var(--text-main);
+      font-weight: 500;
+      cursor: pointer;
+      margin-right: 10px;
+      transition: background 0.2s;
+    }
+
+    input[type="file"]::file-selector-button:hover {
+      background: #cbd5e1;
+    }
+
+    .upload-status {
+      display: block;
+      margin-top: 6px;
+      font-size: 12px;
+      font-weight: 500;
+    }
+    
+    /* Buttons */
+    button { 
+      cursor: pointer; 
+      border: none; 
+      padding: 12px 24px; 
+      border-radius: var(--radius); 
+      font-size: 14px;
+      font-weight: 600; 
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    
+    .btn-save { 
+      background: var(--primary); 
+      color: white; 
+      box-shadow: 0 2px 4px rgba(16, 185, 129, 0.2);
+    }
+    
+    .btn-save:hover:not(:disabled) { 
+      background: var(--primary-hover); 
+      transform: translateY(-1px);
+    }
+
+    .btn-save:disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
+    }
+    
+    .btn-ghost { 
+      background: transparent; 
+      color: white; 
+      border: 1px solid rgba(255,255,255,0.3); 
+    }
+    
+    .btn-ghost:hover {
+      background: rgba(255,255,255,0.1);
+    }
+    
+    .btn-view { 
+      background: #334155; 
+      color: white; 
+    }
+
+    .btn-view:hover {
+      background: #1e293b;
+    }
+
+    /* Modal */
+    #employeeModal { 
+      display: none; 
+      position: fixed; 
+      top: 0; left: 0; width: 100%; height: 100%; 
+      background: rgba(15, 23, 42, 0.6); 
+      backdrop-filter: blur(4px);
+      z-index: 1000; 
+      justify-content: center; 
+      align-items: center; 
+      padding: 20px;
+      box-sizing: border-box;
+    }
+    
+    .modal-content { 
+      background: white; 
+      width: 100%; 
+      max-width: 1100px; 
+      max-height: 90vh; 
+      overflow-y: auto; 
+      border-radius: 12px; 
+      padding: 35px; 
+      position: relative; 
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    }
+
+    /* Custom Scrollbar for Modal */
+    .modal-content::-webkit-scrollbar { width: 8px; }
+    .modal-content::-webkit-scrollbar-track { background: #f1f5f9; border-radius: 4px; }
+    .modal-content::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+    .modal-content::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+    
+    .close-modal { 
+      position: absolute; 
+      top: 20px; 
+      right: 25px; 
+      font-size: 28px; 
+      color: #94a3b8;
+      cursor: pointer; 
+      transition: color 0.2s;
+    }
+
+    .close-modal:hover {
+      color: #0f172a;
+    }
+    
+    #modalTitle {
+      margin-top: 0;
+      color: #0f172a;
+      border-bottom: 2px solid #f1f5f9;
+      padding-bottom: 15px;
+      margin-bottom: 20px;
+    }
+
+    /* Table Styling */
+    table { 
+      width: 100%; 
+      border-collapse: separate; 
+      border-spacing: 0;
+      margin-top: 10px; 
+      border-radius: 8px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+    
+    th, td { 
+      padding: 14px 16px; 
+      text-align: left; 
+      font-size: 14px; 
+      border-bottom: 1px solid var(--border);
+    }
+
+    th { 
+      background: #f8fafc; 
+      font-weight: 600;
+      color: var(--text-muted);
+      position: sticky; 
+      top: 0; 
+      z-index: 10;
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    tr:hover td {
+      background: #f1f5f9;
+    }
+    
+    .action-icon { 
+      color: var(--text-muted); 
+      cursor: pointer; 
+      margin-right: 18px; 
+      font-size: 16px;
+      transition: color 0.2s;
+    }
+
+    .fa-eye:hover { color: var(--primary); }
+    .fa-edit:hover { color: #3b82f6; }
+
+    .break { display: none; } /* Used in original code for spacing, handled by grid now */
+    @media (min-width: 768px) {
+      .break { display: block; grid-column: 1 / -1; height: 0; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <div class="form-card">
+    <div class="header">
+      <div>
+        <h1>Employee Joining Portal</h1>
+        <small>Please fill all the required details accurately</small>
+      </div>
+      <div class="header-btns">
+        <button type="button" class="btn-ghost" onclick="resetForm()"><i class="fas fa-undo-alt"></i> Clear</button>
+        <button type="button" class="btn-save" id="saveBtn" onclick="submitForm()"><i class="fas fa-save"></i> Save Record</button>
+      </div>
+    </div>
+
+    <form id="joinForm">
+      
+      <div class="section">
+        <div class="section-title"><i class="fas fa-id-card"></i> Basic & Contact Details</div>
+        <div class="grid">
+          <div class="field"><label>Emp Code</label><input name="Emp Code" type="text" placeholder="e.g. EMP-001"></div>
+          <div class="field"><label>Name <span style="color:red">*</span></label><input name="Name" type="text" required placeholder="Full Name"></div>
+          <div class="field"><label>Nationality</label><input name="Nationality" type="text"></div>
+          <div class="field"><label>Religion</label><input name="Religion" type="text"></div>
+          <div class="field"><label>Mobile Number</label><input name="Mobile Number" type="text" placeholder="+91"></div>
+          <div class="field"><label>Official Email ID</label><input name="Official Email ID" type="text" placeholder="name@company.com"></div>
+          <div class="field"><label>Personal Email ID</label><input name="Personal Email ID" type="text" placeholder="name@gmail.com"></div>
+          <div class="field">
+            <label>Gender</label>
+            <select name="Gender">
+              <option value="">Select</option>
+              <option>Male</option>
+              <option>Female</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Blood Group <span style="color:red">*</span></label>
+            <select name="Blood Group" required>
+              <option value="">Select Blood Group</option>
+              <option value="A+">A+</option>
+              <option value="A-">A-</option>
+              <option value="B+">B+</option>
+              <option value="B-">B-</option>
+              <option value="AB+">AB+</option>
+              <option value="AB-">AB-</option>
+              <option value="O+">O+</option>
+              <option value="O-">O-</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Marital Status</label>
+            <select name="Marital Status">
+              <option value="">Select</option>
+              <option>Married</option>
+              <option>Unmarried</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title"><i class="fas fa-phone-alt"></i> Emergency Contacts</div>
+        <div class="grid">
+          <div class="field"><label>Emergency Contact Name 1</label><input name="Emergency contact Name 1" type="text"></div>
+          <div class="field"><label>Emergency Contact Number 1</label><input name="Emergency contact Number 1" type="text"></div>
+          <div class="field"><label>Emergency Contact Address 1</label><input name="Emergency contact Address 1" type="text"></div>
+          <div class="break"></div>
+          <div class="field"><label>Emergency Contact Name 2</label><input name="Emergency contact Name 2" type="text"></div>
+          <div class="field"><label>Emergency Contact Number 2</label><input name="Emergency contact Number 2" type="text"></div>
+          <div class="field"><label>Emergency Contact Address 2</label><input name="Emergency contact Address 2" type="text"></div>
+          <div class="break"></div>
+          <div class="field"><label>Emergency Contact Name 3</label><input name="Emergency contact Name 3" type="text"></div>
+          <div class="field"><label>Emergency Contact Number 3</label><input name="Emergency contact Number 3" type="text"></div>
+          <div class="field"><label>Emergency Contact Address 3</label><input name="Emergency contact Address 3" type="text"></div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title"><i class="fas fa-briefcase"></i> Job & Office Location</div>
+        <div class="grid">
+          <div class="field"><label>Designation</label><input name="Designation" type="text"></div>
+          <div class="field"><label>Department</label><input name="Department" type="text"></div>
+          <div class="field">
+            <label>Working Location <span style="color:red">*</span></label>
+            <select name="Working Location" required>
+              <option value="">-- Select Location --</option>
+              <option value="Rai Shed 1">Rai Shed 1</option>
+              <option value="Rai Shed 2">Rai Shed 2</option>
+              <option value="Rai Shed 3">Rai Shed 3</option>
+              <option value="Lawrence Road">Lawrence Road</option>
+              <option value="Bawana Solar Park">Bawana Solar Park</option>
+              <option value="Kundali Amrit">Kundali Amrit</option>
+              <option value="Kundali Mirigesh">Kundali Mirigesh</option>
+              <option value="kolkata coldman">kolkata coldman</option>
+              <option value="kolkata Sagar">kolkata Sagar</option>
+              <option value="Nagpur Melghat">Nagpur Melghat</option>
+              <option value="Prayagraj">Prayagraj</option>
+              <option value="Saraon">Saraon</option>
+              <option value="Pune">Pune</option>
+              <option value="Mumbai">Mumbai</option>
+              <option value="Lucknow">Lucknow</option>
+              <option value="Chennai">Chennai</option>
+              <option value="Banglore">Banglore</option>    
+              <option value="Ahemdabad">Ahemdabad</option>
+              <option value="Jaipur">Jaipur</option>
+              <option value="Guwahati">Guwahati</option>
+              <option value="Indore">Indore</option>
+              <option value="bhiwandi">bhiwandi</option>
+              <option value="kanpur">kanpur</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+          <div class="field"><label>Reporting Manager</label><input name="Reporting Manager" type="text"></div>
+          <div class="field"><label>Date of Birth</label><input name="Date of Birth" type="date"></div>
+          <div class="field"><label>Date of Joining</label><input name="Date of Joining" type="date"></div>
+          <div class="field"><label>Date of Resignation</label><input name="Date of Resignation" type="date"></div>
+          <div class="field"><label>Date of Full & Final</label><input name="Date of full and final" type="date"></div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title"><i class="fas fa-home"></i> Address Details</div>
+        <div class="grid">
+          <div class="field"><label>Address (Local)</label><input name="Address (local)" type="text"></div>
+          <div class="field"><label>Pincode (Local)</label><input name="Pincode (local)" type="text"></div>
+          <div class="field"><label>Address (Village)</label><input name="Address (village)" type="text"></div>
+          <div class="field"><label>Pincode (Village)</label><input name="Pincode (village)" type="text"></div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title"><i class="fas fa-graduation-cap"></i> Educational Qualifications</div>
+        <div class="grid">
+          <div class="field"><label>10th [Institute/Board]</label><input name="10th [Name of the Institute/Board]" type="text"></div>
+          <div class="field"><label>10th [% or Grade]</label><input name="10th [%ages of Marks / Grade]" type="text"></div>
+          <div class="field"><label>10th [Passing Year]</label><input name="10th [Year of Passing]" type="text"></div>
+          <div class="field">
+            <label>10th Certificate</label>
+            <input type="file" onchange="handleFileUpload(this, '10th Certificate')" accept="image/*,application/pdf">
+            <input type="hidden" name="10th Certificate">
+            <span class="upload-status"></span>
+          </div>
+          
+          <div class="field"><label>12th [Institute/Board]</label><input name="12th Name of the Institute/Board" type="text"></div>
+          <div class="field"><label>12th [% or Grade]</label><input name="12th [%ages of Marks / Grade]" type="text"></div>
+          <div class="field"><label>12th [Passing Year]</label><input name="12th [Year of Passing]" type="text"></div>
+          <div class="field">
+            <label>12th Certificate</label>
+            <input type="file" onchange="handleFileUpload(this, '12th Certificate')" accept="image/*,application/pdf">
+            <input type="hidden" name="12th Certificate">
+            <span class="upload-status"></span>
+          </div>
+
+          <div class="field"><label>Graduation [Institute/Board]</label><input name="Graduation [Name of the Institute/Board]" type="text"></div>
+          <div class="field"><label>Graduation [% or Grade]</label><input name="Graduation [%ages of Marks / Grade]" type="text"></div>
+          <div class="field"><label>Graduation [Passing Year]</label><input name="Graduation [Year of Passing]" type="text"></div>
+          <div class="field">
+            <label>Graduation Degree</label>
+            <input type="file" onchange="handleFileUpload(this, 'Graduation Degree')" accept="image/*,application/pdf">
+            <input type="hidden" name="Graduation Degree">
+            <span class="upload-status"></span>
+          </div>
+
+          <div class="field"><label>PG/Diploma [Institute/Board]</label><input name="Post-Graduation / Diploma [Name of the Institute/Board]" type="text"></div>
+          <div class="field"><label>PG/Diploma [% or Grade]</label><input name="Post-Graduation / Diploma [%ages of Marks / Grade]" type="text"></div>
+          <div class="field"><label>PG/Diploma [Passing Year]</label><input name="Post-Graduation / Diploma [Year of Passing]" type="text"></div>
+          <div class="field">
+            <label>Post Graduation Degree</label>
+            <input type="file" onchange="handleFileUpload(this, 'Post Graduation Degree')" accept="image/*,application/pdf">
+            <input type="hidden" name="Post Graduation Degree">
+            <span class="upload-status"></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title"><i class="fas fa-history"></i> Last Employment History (Previous 4 Companies)</div>
+        <div class="grid">
+          <div class="field"><label>1. Last Company Name</label><input name="Last Company Name 1" type="text"></div>
+          <div class="field"><label>Position Held</label><input name="Position Held in Last Company 1" type="text"></div>
+          <div class="field"><label>Period (From – To)</label><input name="Employment Period (From – To) 1" type="text"></div>
+          <div class="field"><label>Reason for leaving</label><input name="Reason for leaving 1" type="text"></div>
+          
+          <div class="field"><label>2. Last Company Name</label><input name="Last Company Name 2" type="text"></div>
+          <div class="field"><label>Position Held</label><input name="Position Held in Last Company 2" type="text"></div>
+          <div class="field"><label>Period (From – To)</label><input name="Employment Period (From – To) 2" type="text"></div>
+          <div class="field"><label>Reason for leaving</label><input name="Reason for leaving 2" type="text"></div>
+          
+          <div class="field"><label>3. Last Company Name</label><input name="Last Company Name 3" type="text"></div>
+          <div class="field"><label>Position Held</label><input name="Position Held in Last Company 3" type="text"></div>
+          <div class="field"><label>Period (From – To)</label><input name="Employment Period (From – To) 3" type="text"></div>
+          <div class="field"><label>Reason for leaving</label><input name="Reason for leaving 3" type="text"></div>
+          
+          <div class="field"><label>4. Last Company Name</label><input name="Last Company Name 4" type="text"></div>
+          <div class="field"><label>Position Held</label><input name="Position Held in Last Company 4" type="text"></div>
+          <div class="field"><label>Period (From – To)</label><input name="Employment Period (From – To) 4" type="text"></div>
+          <div class="field"><label>Reason for leaving</label><input name="Reason for leaving 4" type="text"></div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title"><i class="fas fa-university"></i> Statutory & Bank Details</div>
+        <div class="grid">
+          <div class="field"><label>Aadhar Card Number</label><input name="Aadhar Card Number" type="text"></div>
+          <div class="field"><label>PAN Card Number</label><input name="PAN Card Number" type="text"></div>
+          <div class="field"><label>Bank Name</label><input name="Bank Name" type="text"></div>
+          <div class="field"><label>Branch</label><input name="Branch" type="text"></div>
+          <div class="field"><label>Account Number</label><input name="Account Number" type="text"></div>
+          <div class="field"><label>IFSC Code</label><input name="IFSC Code" type="text"></div>
+          <div class="field"><label>Driving License</label><input name="Driving Lisence" type="text"></div>
+          <div class="field"><label>Voter ID Card</label><input name="Voter ID Card" type="text"></div>
+          <div class="field"><label>PF Number</label><input name="PF Number" type="text"></div>
+          <div class="field"><label>ESI Number</label><input name="ESI Number" type="text"></div>
+          
+          <div class="field">
+            <label>Aadhar Card Photo</label>
+            <input type="file" onchange="handleFileUpload(this, 'Aadhar card Photo')" accept="image/*,application/pdf">
+            <input type="hidden" name="Aadhar card Photo">
+            <span class="upload-status"></span>
+          </div>
+          <div class="field">
+            <label>PAN Card Photo</label>
+            <input type="file" onchange="handleFileUpload(this, 'PAN Card Photo')" accept="image/*,application/pdf">
+            <input type="hidden" name="PAN Card Photo">
+            <span class="upload-status"></span>
+          </div>
+          <div class="field">
+            <label>Bank Passbook Photo</label>
+            <input type="file" onchange="handleFileUpload(this, 'Bank Passbook Photo')" accept="image/*,application/pdf">
+            <input type="hidden" name="Bank Passbook Photo">
+            <span class="upload-status"></span>
+          </div>
+          <div class="field">
+            <label>Passport Size Photo</label>
+            <input type="file" onchange="handleFileUpload(this, 'Passport Size Photo')" accept="image/*,application/pdf">
+            <input type="hidden" name="Passport Size Photo">
+            <span class="upload-status"></span>
+          </div>
+          <div class="field">
+            <label>Family Photo</label>
+            <input type="file" onchange="handleFileUpload(this, 'Family Photo')" accept="image/*,application/pdf">
+            <input type="hidden" name="Family Photo">
+            <span class="upload-status"></span>
+          </div>
+        </div>
+      </div>
+          
+      <div class="section">
+        <div class="section-title"><i class="fas fa-users"></i> Family Details</div>
+        <div class="grid">
+          <div class="field"><label>Father's Name</label><input name="Father's Name" type="text"></div>
+          <div class="field"><label>Father's DOB</label><input name="Father's DOB" type="date"></div>
+          <div class="field"><label>Father's Occupation</label><input name="Father's Occupation" type="text"></div>
+          <div class="break"></div>
+          <div class="field"><label>Mother's Name</label><input name="Mother's Name" type="text"></div>
+          <div class="field"><label>Mother's DOB</label><input name="Mother's DOB" type="date"></div>
+          <div class="field"><label>Mother's Occupation</label><input name="Mother's Occupation" type="text"></div>
+          <div class="break"></div>
+          <div class="field"><label>Husband's Name</label><input name="Husband's Name" type="text"></div>
+          <div class="field"><label>Husband's DOB</label><input name="Husband's DOB" type="date"></div>
+          <div class="field"><label>Husband's Occupation</label><input name="Husband's Occupation" type="text"></div>
+          <div class="break"></div>
+          <div class="field"><label>Wife's Name</label><input name="Wife's Name" type="text"></div>
+          <div class="field"><label>Wife's DOB</label><input name="Wife's Name[DOB]" type="date"></div>
+          <div class="field"><label>Wife's Occupation</label><input name="Wife's Name[Occupation]" type="text"></div>
+          <div class="break"></div>
+          <div class="field"><label>Brother 1 Name</label><input name="Brother's Name 1" type="text"></div>
+          <div class="field"><label>Brother 1 DOB</label><input name="Brother's Name 1[DOB]" type="date"></div>
+          <div class="field"><label>Brother 1 Occupation</label><input name="Brother's Name 1[Occupation]" type="text"></div>
+          <div class="break"></div>
+          <div class="field"><label>Brother 2 Name</label><input name="Brother's Name 2" type="text"></div>
+          <div class="field"><label>Brother 2 DOB</label><input name="Brother's Name 2[DOB]" type="date"></div>
+          <div class="field"><label>Brother 2 Occupation</label><input name="Brother's Name 2[Occupation]" type="text"></div>
+          <div class="break"></div>
+          <div class="field"><label>Brother 3 Name</label><input name="Brother's Name 3" type="text"></div>
+          <div class="field"><label>Brother 3 DOB</label><input name="Brother's Name 3[DOB]" type="date"></div>
+          <div class="field"><label>Brother 3 Occupation</label><input name="Brother's Name 3[Occupation]" type="text"></div>
+          <div class="break"></div>
+          <div class="field"><label>Sister 1 Name</label><input name="Sister's Name 1" type="text"></div>
+          <div class="field"><label>Sister 1 DOB</label><input name="Sister's Name 1[DOB]" type="date"></div>
+          <div class="field"><label>Sister 1 Occupation</label><input name="Sister's Name 1[Occupation]" type="text"></div>
+          <div class="break"></div>
+          <div class="field"><label>Sister 2 Name</label><input name="Sister's Name 2" type="text"></div>
+          <div class="field"><label>Sister 2 DOB</label><input name="Sister's Name 2[DOB]" type="date"></div>
+          <div class="field"><label>Sister 2 Occupation</label><input name="Sister's Name 2[Occupation]" type="text"></div>
+          <div class="break"></div>
+          <div class="field"><label>Sister 3 Name</label><input name="Sister's Name 3" type="text"></div>
+          <div class="field"><label>Sister 3 DOB</label><input name="Sister's Name 3[DOB]" type="date"></div>
+          <div class="field"><label>Sister 3 Occupation</label><input name="Sister's Name 3[Occupation]" type="text"></div>
+          <div class="break"></div>
+          <div class="field"><label>Son 1 Name</label><input name="Son 1" type="text"></div>
+          <div class="field"><label>Son 1 DOB</label><input name="Son 1[DOB]" type="date"></div>
+          <div class="field"><label>Son 1 Occupation</label><input name="Son 1[Occupation]" type="text"></div>
+          <div class="break"></div>
+          <div class="field"><label>Son 2 Name</label><input name="Son 2" type="text"></div>
+          <div class="field"><label>Son 2 DOB</label><input name="Son 2[DOB]" type="date"></div>
+          <div class="field"><label>Son 2 Occupation</label><input name="Son 2[Occupation]" type="text"></div>
+          <div class="break"></div>
+          <div class="field"><label>Son 3 Name</label><input name="Son 3" type="text"></div>
+          <div class="field"><label>Son 3 DOB</label><input name="Son 3[DOB]" type="date"></div>
+          <div class="field"><label>Son 3 Occupation</label><input name="Son 3[Occupation]" type="text"></div>
+          <div class="break"></div>
+          <div class="field"><label>Daughter 1 Name</label><input name="Daughter 1" type="text"></div>
+          <div class="field"><label>Daughter 1 DOB</label><input name="Daughter 1[DOB]" type="date"></div>
+          <div class="field"><label>Daughter 1 Occupation</label><input name="Daughter 1[Occupation]" type="text"></div>
+          <div class="break"></div>
+          <div class="field"><label>Daughter 2 Name</label><input name="Daughter 2" type="text"></div>
+          <div class="field"><label>Daughter 2 DOB</label><input name="Daughter 2[DOB]" type="date"></div>
+          <div class="field"><label>Daughter 2 Occupation</label><input name="Daughter 2[Occupation]" type="text"></div>
+          <div class="break"></div>
+          <div class="field"><label>Daughter 3 Name</label><input name="Daughter 3" type="text"></div>
+          <div class="field"><label>Daughter 3 DOB</label><input name="Daughter 3[DOB]" type="date"></div>
+          <div class="field"><label>Daughter 3 Occupation</label><input name="Daughter 3[Occupation]" type="text"></div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title"><i class="fas fa-user-shield"></i> Nominee Details</div>
+        <div class="grid">
+          <div class="field"><label>Nominee 1</label><input name="Nominee 1" type="text"></div>
+          <div class="field"><label>Nominee 1 (%)</label><input name="Nominee 1 (%)" type="text"></div>
+          <div class="field"><label>Relationship with Nominee 1</label><input name="Relationship with Nominee 1" type="text"></div>
+          <div class="field"><label>Address of Nominee 1</label><input name="Address of Nominee 1" type="text"></div>
+          <div class="field"><label>DOB of Nominee 1</label><input name="DOB of Nominee 1" type="date"></div>
+          <div class="break"></div>
+          
+          <div class="field"><label>Nominee 2</label><input name="Nominee 2" type="text"></div>
+          <div class="field"><label>Nominee 2 (%)</label><input name="Nominee 2 (%)" type="text"></div>
+          <div class="field"><label>Relationship with Nominee 2</label><input name="Relationship with Nominee 2" type="text"></div>
+          <div class="field"><label>Address of Nominee 2</label><input name="Address of Nominee 2" type="text"></div>
+          <div class="field"><label>DOB of Nominee 2</label><input name="DOB of Nominee 2" type="date"></div>
+          <div class="break"></div>
+          
+          <div class="field"><label>Nominee 3</label><input name="Nominee 3" type="text"></div>
+          <div class="field"><label>Nominee 3 (%)</label><input name="Nominee 3 (%)" type="text"></div>
+          <div class="field"><label>Relationship with Nominee 3</label><input name="Relationship with Nominee 3" type="text"></div>
+          <div class="field"><label>Address of Nominee 3</label><input name="Address of Nominee 3" type="text"></div>
+          <div class="field"><label>DOB of Nominee 3</label><input name="DOB of Nominee 3" type="date"></div>
+        </div>
+      </div>
+
+    </form>
+  </div>
+</div>
+
+<script>
+  // Google Apps Script Web App endpoint. Backend must implement doPost(e)
+  // and route actions: saveJoiningData and uploadFileToDrive.
+  const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxfOAYMJedsrmpiO2AnY6V5Ov96OhhHOisdE47BAV51mEOW1eN2YEfcnPqXJp-MVuby/exec";
+
+  async function callAppsScript(action, payload = {}) {
+    const response = await fetch(APPS_SCRIPT_URL, {
+      method: "POST",
+      headers: { "Content-Type": "text/plain;charset=utf-8" },
+      body: JSON.stringify({ action, ...payload })
+    });
+    if (!response.ok) throw new Error("Apps Script request failed: HTTP " + response.status);
+    const text = await response.text();
+    try { return JSON.parse(text); }
+    catch (_) { throw new Error("Apps Script ne JSON response nahi diya. Code.gs mein doPost(e) action router check karein."); }
+  }
+
+  let editIndex = null;
+
+  function submitForm() {
+    const btn = document.getElementById('saveBtn');
+    btn.disabled = true;
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
+    
+    const data = {};
+    const form = document.getElementById('joinForm');
+    new FormData(form).forEach((value, key) => data[key] = value);
+
+    callAppsScript("saveJoiningData", { data, editIndex })
+      .then(res => {
+        if (!res || (res.status !== "success" && res.status !== "updated")) {
+          throw new Error(res && res.message ? res.message : "Record save nahi hua.");
+        }
+        alert(res.status === "updated" ? "Record Updated Successfully" : "Record Saved Successfully");
+        resetForm();
+      })
+      .catch(err => alert("Save failed: " + err.message))
+      .finally(() => {
+        btn.disabled = false;
+        btn.innerHTML = '<i class="fas fa-save"></i> Save Record';
+      });
+  }
+
+ function resetForm() {
+    document.getElementById('joinForm').reset();
+    
+    const hiddenInputs = document.querySelectorAll('#joinForm input[type="hidden"]');
+    hiddenInputs.forEach(input => input.value = "");
+
+    const statusLabels = document.querySelectorAll('.upload-status');
+    statusLabels.forEach(label => {
+        label.innerHTML = "";
+        label.style.color = "";
+    });
+
+    editIndex = null;
+    const btn = document.getElementById('saveBtn');
+    btn.disabled = false;
+    btn.innerHTML = '<i class="fas fa-save"></i> Save Record';
+}
+
+
+
+  let activeUploads = 0;
+
+  function handleFileUpload(inputElement, colName) {
+    const file = inputElement.files[0];
+    if (!file) return;
+
+    const statusLabel = inputElement.parentElement.querySelector('.upload-status');
+    const saveBtn = document.getElementById('saveBtn');
+    
+    statusLabel.innerHTML = "<i class='fas fa-spinner fa-spin'></i> Uploading...";
+    statusLabel.style.color = "#f59e0b"; // amber
+    activeUploads++;
+    saveBtn.disabled = true;
+
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      callAppsScript("uploadFileToDrive", { dataUrl: e.target.result, fileName: file.name })
+        .then(res => {
+          if (res && res.status === "success" && res.url) {
+            document.getElementsByName(colName)[0].value = res.url;
+            statusLabel.innerHTML = "<i class='fas fa-check-circle'></i> Uploaded";
+            statusLabel.style.color = "#10b981";
+          } else {
+            throw new Error(res && res.message ? res.message : "Upload response invalid.");
+          }
+        })
+        .catch(err => {
+          statusLabel.innerHTML = "<i class='fas fa-times-circle'></i> Upload failed";
+          statusLabel.style.color = "#ef4444";
+          alert("Upload failed: " + err.message);
+        })
+        .finally(() => {
+          activeUploads--;
+          if (activeUploads === 0) saveBtn.disabled = false;
+        });
+    };
+    reader.readAsDataURL(file);
+  }
+</script>
+
+</body>
+</html>
